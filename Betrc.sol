@@ -73,16 +73,11 @@ contract BetrC is owned{
         assert(balanceOf[_from] + balanceOf[_to] == previousBalances);
     }
 
-    /**
-     * Transfer tokens
-     *
-     * Send `_value` tokens to `_to` from your account
-     *
-     * @param _to The address of the recipient
-     * @param _value the amount to send
-     */
+    function getInitialSupply() public returns (uint256){
+      return balanceOf[msg.sender];
+    }
+
     function transfer(address _to, uint256 _value) public {
-        require(!frozenAccount[msg.sender]);
         _transfer(msg.sender, _to, _value);
     }
 

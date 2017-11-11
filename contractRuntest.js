@@ -1,0 +1,12 @@
+var Web3 = require('web3');
+var web3 = new Web3(new Web3.providers.HttpProvider("http://18.220.176.148:8545"));
+var solc = require('solc');
+var fs = require('fs');
+var code = fs.readFileSync('Betrc.sol').toString();
+var compiledCode = solc.compile(code);
+var accounts = web3.eth.accounts;
+var abiDefinition = JSON.parse(compiledCode.contracts[':BetrC'].interface)
+var tContract = web3.eth.contract(abiDefinition)
+var byteCode = "0x" + compiledCode.contracts[':BetrC'].bytecode
+var deployedContract = tContract.new(10000000, web3.eth.accounts[0],{data: byteCode, from: web3.eth.accounts[0], gas: 4700000})
+var contractInstance = tContract.at(deployedContract.address)
